@@ -1,3 +1,5 @@
+// Task model (Also can represent the database schema)
+
 package models
 
 type Task struct {

@@ -1,3 +1,5 @@
+// This is there the HTTP requests are handled
+
 package api
 
 import (
