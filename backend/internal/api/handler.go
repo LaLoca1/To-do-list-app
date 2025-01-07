@@ -8,15 +8,25 @@ import (
 	"strconv"
 
 	"github.com/LaLoca1/to-do-list-app-backend/internal/models"
-	"github.com/LaLoca1/to-do-list-app-backend/internal/services"
 	"github.com/gorilla/mux"
 )
 
-type TaskHandler struct {
-	service *services.TaskService
+// TaskServiceInterface defines the methods required for the service
+type TaskServiceInterface interface {
+	GetTasks() ([]models.Task, error)
+	CreateTask(task *models.Task) error
+	UpdateTask(id int64, task *models.Task) error
+	DeleteTask(id int64) error
 }
 
-func NewTaskHandler(service *services.TaskService) *TaskHandler {
+type TaskHandler struct {
+	service TaskServiceInterface
+}
+
+// MockTaskService is a mock for TaskService. However, Go doesn't allow you to directly assign a mock type to a variable of 
+// another type unless the mock explicitly implements the same interface.
+
+func NewTaskHandler(service TaskServiceInterface) *TaskHandler {
 	return &TaskHandler{service: service}
 }
 
