@@ -43,7 +43,7 @@ const App = () => {
             const updatedTasks = tasks.map(task => 
                 task.id === currentTaskId ? { ...task, ...updatedTask } : task 
             ); 
-            setTasks(updateTask); 
+            setTasks(updatedTasks); 
             resetForm();
         } catch (error) {
             console.error('Error updating task:', error); 
