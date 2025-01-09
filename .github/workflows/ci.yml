@@ -32,7 +32,7 @@ jobs:
       # build backend application
       - name: Backend - Build backend application 
         run: |
-          cd backend 
+          cd backend/cmd
           go build -o to-do-list-app-backend main.go
       
      # Run tests
