@@ -1,0 +1,32 @@
+version: '3.8' 
+services: 
+  backend:
+    build:
+      context: ./backend 
+      dockerfile: Dockerfile 
+    environment:
+      - PORT=8080 
+      - DB_HOST=db 
+      - DB_PORT=5432 
+      - DB_USER=user 
+      - DB_PASSWORD=pass 
+    ports:
+      - "8080:8080" 
+    depends_on:
+      - db 
+
+  frontend:
+    build: 
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports: 
+      - "3000:80" 
+
+  db: 
+    image: postgres:15-alpine 
+    environment:
+      POSTGRES_USER: user 
+      POSTGRES_PASSWORD: pass 
+      POSTGRES_DB: to_do_list 
+    ports:
+      - "5432:5432" 

@@ -1,6 +1,6 @@
 module github.com/LaLoca1/to-do-list-app-backend
 
-go 1.23.4
+go 1.23
 
 require (
 	github.com/DATA-DOG/go-sqlmock v1.5.2
