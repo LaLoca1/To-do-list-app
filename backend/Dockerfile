@@ -1,43 +1,38 @@
-# Use an official Golang image to build the Go app with CGO support
-FROM golang:1.23 AS builder 
+# Use the official Golang image to create a build environment
+FROM golang:1.23-alpine AS builder
 
-# Set the Current Working Directory inside the container 
-WORKDIR /app 
+# Install build dependencies (SQLite and C compiler)
+RUN apk add --no-cache gcc musl-dev sqlite-dev
 
-# Install dependencies required for CGO (SQLite and build tools)
-RUN apt-get update && apt-get install -y \
-    gcc \
-    make \
-    libc6-dev \
-    libsqlite3-dev
+# Set the working directory inside the container
+WORKDIR /app
 
-# Copy go.mod and go.sum files for dependency resolution 
-COPY go.mod go.sum ./ 
+# Copy the Go module files
+COPY go.mod go.sum ./
 
 # Download all dependencies
-RUN go mod tidy
+RUN go mod download
 
-# Copy entire backend source code into the container 
-COPY . . 
+# Copy the source code into the container
+COPY . .
 
-# Build the Go app with CGO enabled
-WORKDIR /app/cmd 
-RUN CGO_ENABLED=1 go build -o to-do-list-app-backend 
+# Build the Go application with CGO enabled
+RUN CGO_ENABLED=1 GOOS=linux go build -o to-do-list-app-backend ./cmd
 
-# Start a new stage for the final image 
+# Use a minimal Alpine image for the final stage
 FROM alpine:latest
 
-# Install necessary dependencies for the final image (SQLite)
+# Install SQLite in the final image
 RUN apk add --no-cache sqlite-dev
 
-# Set the Current Working Directory inside the container
+# Set the working directory
 WORKDIR /root/
 
-# Copy the binary from the build stage
-COPY --from=builder /app/cmd/to-do-list-app-backend .
+# Copy the binary from the builder stage
+COPY --from=builder /app/to-do-list-app-backend .
 
-# Expose port
+# Expose the application port
 EXPOSE 8080
 
-# # Command to run the executable
-# CMD ["./to-do-list-app-backend"]
+# Command to run the application
+CMD ["./to-do-list-app-backend"]
