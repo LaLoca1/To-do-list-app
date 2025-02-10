@@ -16,7 +16,7 @@ This is a simple **To-Do List** application built as a hands-on project to learn
 
 ## **📌 Features**
 ✅ Add, update, and delete to-do items  
-✅ Store tasks in a **PostgreSQL database**  
+✅ Store tasks in a **Sqlite database**  
 ✅ **Containerized with Docker** for easy deployment  
 ✅ **Deployable on AWS** using EC2/EKS with Terraform  
 ✅ **Kubernetes manifests** for managing pods, services, and deployments  
