@@ -9,7 +9,7 @@ This is a simple **To-Do List** application built as a hands-on project to learn
 - **Database:** Sqlite
 - **Containerization:** Docker  
 - **Orchestration:** Kubernetes  
-- **Cloud Provider:** AWS (EC2, EKS, RDS, S3)  
+- **Cloud Provider:** AWS  
 - **Infrastructure as Code:** Terraform  
 
 ---
